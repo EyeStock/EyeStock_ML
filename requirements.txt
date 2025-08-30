@@ -1,0 +1,11 @@
+transformers 
+langchain_community
+langchain_chroma
+newspaper3k
+numpy
+lxml[html_clean]
+tiktoken
+sentencepiece
+accelerate
+sentence-transformers
+fastapi
