@@ -96,7 +96,7 @@ generator = pipeline(
     "text-generation",
     model=model,
     tokenizer=tokenizer,
-    max_new_tokens=256,
+    max_new_tokens=512,
     temperature=0.3,
     repetition_penalty=1.05,
     top_k=20,
