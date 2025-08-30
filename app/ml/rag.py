@@ -11,8 +11,8 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from newspaper import Article
 from langchain_core.output_parsers import StrOutputParser
 from langchain.prompts import PromptTemplate
-from collect_url import get_urls_for_keywords  
-from user_command_logger import CommandPatternLogger, embeddings
+from app.ml.collect_url import get_urls_for_keywords
+from app.utils.user_command_logger import CommandPatternLogger, embeddings
 import uuid
 import threading, queue, sys
 from datetime import datetime, timedelta

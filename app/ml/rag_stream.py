@@ -19,9 +19,9 @@ from sentence_transformers import SentenceTransformer
 from langchain_chroma import Chroma
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from newspaper import Article
-from collect_url import get_urls_from_question
-from user_command_logger import CommandPatternLogger
-from embed_loader import get_embedder
+from app.ml.collect_url import get_urls_from_question
+from app.utils.user_command_logger import CommandPatternLogger
+from app.ml.embed_loader import get_embedder
 
 MODEL_PATH = os.getenv("MODEL_PATH")
 EMBEDDING_PATH = os.getenv("EMBEDDING_PATH")
