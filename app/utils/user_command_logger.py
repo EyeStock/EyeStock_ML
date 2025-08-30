@@ -5,7 +5,7 @@ from langchain_chroma import Chroma
 from datetime import datetime, timedelta
 import os
 from sentence_transformers import SentenceTransformer
-from embed_loader import get_embedder
+from app.ml.embed_loader import get_embedder
 
 EMBEDDING_PATH = os.getenv("EMBEDDING_PATH")
 
