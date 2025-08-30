@@ -98,6 +98,10 @@ async def process_chat(req: ChatRequest, user_id: str) -> ChatResponse:
     filtered = [d for d in docs if _is_stock_chunk(getattr(d, "page_content", ""))]
     print(f"[DEBUG] 필터링 후 문서 수: {len(filtered)}")
 
+    # 답변 생성할 때 참고할 뉴스 문서가 0개라면 상위 3개를 fallback으로 사용
+    if not filtered and docs:
+        filtered = docs[:3]
+
     # 본문 + 메타데이터 기반 context 구성
     doc_context = "\n\n".join(
         f"[{d.metadata.get('date','')}] {d.metadata.get('title','')}\n{d.page_content[:300]}..."
