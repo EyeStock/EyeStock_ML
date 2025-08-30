@@ -7,16 +7,28 @@ from app.ml.collect_url import extract_keywords, get_news_for_keywords
 from newspaper import Article
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
-
+# 주가/거래/공시 같은 금융 키워드 + 주요 기업/산업 키워드가 있으면 통과
 def _is_stock_chunk(text: str) -> bool:
     if not text:
         return False
-    keys = [
+
+    finance_keys = [
         "주가","공시","실적","거래량","상한가","하한가","배당",
         "증자","감자","자사주","리포트","목표가","투자의견",
         "코스피","코스닥","나스닥","m&a","수주","신제품"
     ]
-    return any(k in text.lower() for k in keys)
+    company_keys = [
+        "삼성","LG","현대","SK","네이버","카카오","테슬라","애플",
+        "엔비디아","MS","구글","아마존"
+    ]
+    sector_keys = [
+        "AI","반도체","바이오","전기차","로봇","2차전지","클라우드","디스플레이"
+    ]
+
+    keys = finance_keys + company_keys + sector_keys
+    t = text.lower()
+    return any(k.lower() in t for k in keys)
+
 
 def _clean_title(title: str) -> str:
     """뉴스 제목에서 HTML 태그 제거"""
