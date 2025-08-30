@@ -8,3 +8,4 @@ tiktoken
 sentencepiece
 accelerate
 sentence-transformers
+fastapi
