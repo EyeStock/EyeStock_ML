@@ -5,7 +5,7 @@ import json
 import os
 import re
 
-# === NAVER API 인증 ===
+# NAVER API 인증
 CLIENT_ID = os.getenv("NAVER_CLIENT_ID")
 CLIENT_SECRET = os.getenv("NAVER_CLIENT_SECRET")
 
@@ -60,7 +60,7 @@ def collect_links(json_result: list) -> list[str]:
     ))
 
 
-# URL 수집 (Chat/RAG)
+# URL 수집 (RAG)
 def get_urls_for_keywords(keywords: list[str], max_per_query: int = 200, display_per_page: int = 100) -> list[str]:
     url_list = []
     for q in keywords:
