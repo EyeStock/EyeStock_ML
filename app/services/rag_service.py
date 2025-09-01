@@ -3,7 +3,7 @@ from typing import List
 from app.ml import rag
 from app.utils.user_command_logger import CommandPatternLogger
 from app.models.chat import ChatRequest, ChatResponse
-from app.ml.collect_url import extract_keywords, get_news_for_keywords
+from app.ml.collect_url import extract_keywords, get_news_for_keywords, clean_title
 from newspaper import Article
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
@@ -29,11 +29,6 @@ def _is_stock_chunk(text: str) -> bool:
     t = text.lower()
     return any(k.lower() in t for k in keys)
 
-
-def _clean_title(title: str) -> str:
-    """뉴스 제목에서 HTML 태그 제거"""
-    return re.sub(r"<[^>]+>", "", title or "").strip()
-
 def _postprocess_chatty(text: str) -> str:
     t = re.sub(r"(?m)^\s*([\-–•\*\d]+\s*[.)]?)\s*", "", text)
     t = re.sub(r"\s*\n+\s*", " ", t).strip()
@@ -52,7 +47,7 @@ async def _fetch_and_store_news(question: str, duration_seconds: int = 60):
             print(f"[DEBUG] 수집 중단: {duration_seconds}초 초과")
             break
         url = item.get("link")
-        title = _clean_title(item.get("title") or "")
+        title = clean_title(item.get("title") or "")
         date = item.get("date") or ""
         try:
             article = Article(url)
