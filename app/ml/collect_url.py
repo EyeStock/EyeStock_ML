@@ -129,8 +129,9 @@ def get_news_for_keywords(
     return results
 
 # 카드뉴스 반환
-def collect_news_as_json(keywords: list[str], days: int = 14, max_links: int = 200) -> list[dict]:
-    results = []
+def collect_news_as_json(question: str, days: int = 14, max_links: int = 200) -> list[dict]:
+    keywords = extract_keywords(question)
+    results = [] 
     for kw in keywords:
         print(f"[수집] 키워드='{kw}', 기간={days}일, 최대={max_links}개")
         urls_data = get_news_for_keywords([kw], days=days, max_links=max_links)
@@ -142,7 +143,6 @@ def collect_news_as_json(keywords: list[str], days: int = 14, max_links: int = 2
                 "date": item.get("date"),
             })
     return results
-
 
 # 질문 → 키워드 추출
 def extract_keywords(question: str) -> list[str]:

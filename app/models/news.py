@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 from typing import List
 
 class NewsRequest(BaseModel):
-    keywords: List[str] = Field(..., description="검색 키워드 목록")
+    question: str = Field(..., description="질문/프롬프트")
     days: int = Field(14, description="최근 며칠치 뉴스 수집할지 (기본=14일)")
     max_links: int = Field(200, description="최대 수집 뉴스 개수")
 
