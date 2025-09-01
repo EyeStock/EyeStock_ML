@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Query
 from typing import List, Optional
-from app.ml.collect_url import collect_news_as_json, extract_keywords
+from app.services.card_news_service import collect_news_as_json
 from app.models.news import NewsRequest, NewsResponse, NewsItem
 
 router = APIRouter(prefix="/news", tags=["news"])
