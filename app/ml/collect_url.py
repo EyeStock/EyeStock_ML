@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import json
 import os
 import re
+import html
 
 # NAVER API 인증
 CLIENT_ID = os.getenv("NAVER_CLIENT_ID")
@@ -128,24 +129,17 @@ def get_news_for_keywords(
 
     return results
 
-# 카드뉴스 반환
-def collect_news_as_json(keywords: list[str], days: int = 14, max_links: int = 200) -> list[dict]:
-    results = []
-    for kw in keywords:
-        print(f"[수집] 키워드='{kw}', 기간={days}일, 최대={max_links}개")
-        urls_data = get_news_for_keywords([kw], days=days, max_links=max_links)
-        for item in urls_data:
-            results.append({
-                "keyword": kw,
-                "url": item.get("link"),
-                "title": item.get("title"),
-                "date": item.get("date"),
-            })
-    return results
-
-
 # 질문 → 키워드 추출
 def extract_keywords(question: str) -> list[str]:
     """질문에서 한글 키워드(2글자 이상)를 정규식으로 추출"""
     words = re.findall(r"[\uac00-\ud7a3]{2,}", question)
     return list(set(words))
+
+def clean_title(title: str) -> str:
+    """뉴스 제목에서 HTML 태그 제거 + HTML 엔티티 디코딩"""
+    if not title:
+        return ""
+    cleaned = re.sub(r"<[^>]+>", "", title)
+    cleaned = html.unescape(cleaned)
+    
+    return cleaned.strip()
