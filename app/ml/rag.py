@@ -7,10 +7,10 @@ import gc
 from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 from langchain_community.llms import HuggingFacePipeline
 from langchain_chroma import Chroma
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from newspaper import Article
 from langchain_core.output_parsers import StrOutputParser
-from langchain.prompts import PromptTemplate
+from langchain_core.prompts import PromptTemplate
 from app.ml.collect_url import get_urls_for_keywords
 from app.utils.user_command_logger import CommandPatternLogger, embeddings
 import uuid

@@ -5,7 +5,7 @@ from app.utils.user_command_logger import CommandPatternLogger
 from app.models.chat import ChatRequest, ChatResponse
 from app.ml.collect_url import extract_keywords, get_news_for_keywords, clean_title
 from newspaper import Article
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 # 주가/거래/공시 같은 금융 키워드 + 주요 기업/산업 키워드가 있으면 통과
 def _is_stock_chunk(text: str) -> bool:
