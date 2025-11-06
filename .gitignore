@@ -54,3 +54,5 @@ Thumbs.db
 models--*/
 vectorstore_data/
 vectorstore_user_logs/
+
+test.http
