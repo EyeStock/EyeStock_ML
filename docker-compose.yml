@@ -2,7 +2,14 @@ services:
   eyestock-fastapi:
     build: .                      # Dockerfile 빌드 결과 사용
     container_name: eyestock-fastapi
-    gpus: all                     # GPU 활성화(= runtime/deploy 대체)
+#    gpus: all                     # GPU 활성화(= runtime/deploy 대체)-> ComposeV2에선 실행x
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [ gpu ]
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
       - NAVER_CLIENT_ID=ZdXlVrCKm3aVo2CK8HzC
