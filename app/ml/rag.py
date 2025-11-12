@@ -7,10 +7,10 @@ import gc
 from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 from langchain_community.llms import HuggingFacePipeline
 from langchain_chroma import Chroma
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from newspaper import Article
 from langchain_core.output_parsers import StrOutputParser
-from langchain.prompts import PromptTemplate
+from langchain_core.prompts import PromptTemplate
 from app.ml.collect_url import get_urls_for_keywords
 from app.utils.user_command_logger import CommandPatternLogger, embeddings
 import uuid
@@ -108,13 +108,16 @@ llm = HuggingFacePipeline(
     model_kwargs={"temperature": 0.4}
 )
 
-# Vectorstore
+#VectorStore
+PERSIST_DIR = os.path.expanduser("~/.eyestock/chroma/vectorstore_data")
+os.makedirs(PERSIST_DIR, exist_ok=True)
+
 vectorstore = Chroma(
-    persist_directory="vectorstore_data",
+    persist_directory=PERSIST_DIR,
     collection_name="my_collection",
-    embedding_function=embeddings,
+    embedding_function=embeddings
 )
-retriever = vectorstore.as_retriever(k=30)
+retriever = vectorstore.as_retriever(k=5)
 
 prompt = PromptTemplate.from_template(
     """당신은 *주식/종목* 관련 질문에만 답합니다.

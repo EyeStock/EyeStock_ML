@@ -2,7 +2,14 @@ services:
   eyestock-fastapi:
     build: .                      # Dockerfile 빌드 결과 사용
     container_name: eyestock-fastapi
-    gpus: all                     # GPU 활성화(= runtime/deploy 대체)
+#    gpus: all                     # GPU 활성화(= runtime/deploy 대체)-> ComposeV2에선 실행x
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [ gpu ]
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
       - NAVER_CLIENT_ID=ZdXlVrCKm3aVo2CK8HzC
@@ -18,6 +25,7 @@ services:
       - "5050:8000"               # FastAPI 포트 노출
     stdin_open: true
     tty: true
-    command: /bin/bash            # 팀 방식 유지(진입 후 수동 설치/실행)
+    command: ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--log-level", "info"]
+          # 팀 방식 유지(진입 후 수동 설치/실행)
     restart: unless-stopped
 
