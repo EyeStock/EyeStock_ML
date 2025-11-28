@@ -10,11 +10,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
  && rm -rf /var/lib/apt/lists/*
 
 # # 라이브러리 설치
-# COPY requirements.txt /llm1/requirements.txt
-# RUN pip install -r requirements.txt
 RUN pip install --upgrade pip setuptools wheel
 
-# 기본 진입점: bash로 들어가도록
-CMD ["/bin/bash"]
+COPY requirements.txt /llm1/requirements.txt
+RUN pip install -r requirements.txt
 
+COPY . .
+
+EXPOSE 8000
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
 
