@@ -14,18 +14,24 @@ services:
       - NVIDIA_VISIBLE_DEVICES=all
       - NAVER_CLIENT_ID=ZdXlVrCKm3aVo2CK8HzC
       - NAVER_CLIENT_SECRET=fWGgWzZPhJ
-      - MODEL_PATH=/llm1/models--Bllossom--llama-3.2-Korean-Bllossom-3B/snapshots/e68fbb0d9c2a4031b0d61b14014eac1a4810ac2e
-      - EMBEDDING_PATH=/llm1/models--intfloat--multilingual-e5-large-instruct/snapshots/274baa43b0e13e37fafa6428dbc7938e62e5c439
+
+      - MODEL_PATH=/llm1/models/llama-3.2
+      - EMBEDDING_PATH=/llm1/models/embedding-e5
+
+      - HF_HUB_OFFLINE=1
+
     working_dir: /llm1
     volumes:
       - ./:/llm1
       - ./vectorstore_data:/llm1/vectorstore_data          # (권장) 영속화
       - ./vectorstore_user_logs:/llm1/vectorstore_user_logs # (권장) 영속화
+
+      - ./vectorstore_data:/llm1/vectorstore_data
+      - ./hf_cache:/root/.cache/huggingface
     ports:
       - "5050:8000"               # FastAPI 포트 노출
     stdin_open: true
     tty: true
-    command: ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--log-level", "info"]
-          # 팀 방식 유지(진입 후 수동 설치/실행)
+#    command: /bin/bash            # 팀 방식 유지(진입 후 수동 설치/실행)
     restart: unless-stopped
 
