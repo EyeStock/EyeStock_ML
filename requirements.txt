@@ -9,3 +9,4 @@ sentencepiece
 accelerate
 sentence-transformers
 fastapi
+pyupbit

@@ -18,6 +18,8 @@ services:
       - MODEL_PATH=/llm1/models/llama-3.2
       - EMBEDDING_PATH=/llm1/models/embedding-e5
 
+      - COIN_MODEL_PATH=/llm1/models/transformer_target5.pth
+
       - HF_HUB_OFFLINE=1
 
     working_dir: /llm1
@@ -25,7 +27,7 @@ services:
       - ./:/llm1
       - ./vectorstore_data:/llm1/vectorstore_data          # (권장) 영속화
       - ./vectorstore_user_logs:/llm1/vectorstore_user_logs # (권장) 영속화
-
+      - ./coin_predict_logs:/llm1/coin_predict_logs
       - ./vectorstore_data:/llm1/vectorstore_data
       - ./hf_cache:/root/.cache/huggingface
     ports:
