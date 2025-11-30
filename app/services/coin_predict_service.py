@@ -1,4 +1,5 @@
 import traceback
+from datetime import datetime
 
 import numpy as np
 import pandas as pd
@@ -138,7 +139,10 @@ async def predict_coin(req: PredictRequest, x_user_id: str):
         coin_predict_log(x_user_id, req.coinTicker, buy_signal)
 
         return {
-            "prediction": buy_signal
+            "coinTicker" : req.coinTicker,
+            "prediction": buy_signal,
+            "prob": prob,
+            "timestamp": datetime.now()
         }
     except Exception as e:
         traceback.print_exc()
