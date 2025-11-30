@@ -15,11 +15,12 @@ venv/
 # 데이터/모델/로그 - 실제 폴더 이름에 맞춰 수정하기
 data/
 datasets/
-models/
+/models/
 checkpoints/
 logs/
 runs/
 lightning_logs/
+coin_predict_logs
 
 # 큰 모델 파일들
 *.pt

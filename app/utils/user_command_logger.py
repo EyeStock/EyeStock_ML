@@ -142,6 +142,29 @@ class CommandPatternLogger:
                 pass
         return results
 
+
+COIN_PREDICT_LOG_ROOT = "/llm1/coin_predict_logs"
+
+def coin_predict_log(user_id: str, coinTicker: str, prediction: str):
+    try:
+        # 1. 사용자별 폴더 만들기 (없으면 생성)
+        user_dir = os.path.join(COIN_PREDICT_LOG_ROOT, user_id)
+        os.makedirs(user_dir, exist_ok=True)
+
+        # 2. 오늘 날짜로 파일명 (예: 2024-11-30.txt)
+        filename = datetime.now().strftime("%Y-%m-%d") + ".txt"
+        filepath = os.path.join(user_dir, filename)
+
+        # 3. 시간 찍어서 내용 저장
+        timestamp = datetime.now().strftime("%H:%M:%S")
+        log_content = f"[{timestamp}]\nQ: {coinTicker}\nA: {prediction}\n" + "-" * 30 + "\n"
+
+        # 4. 파일 뒤에 이어쓰기 ('a' 모드)
+        with open(filepath, "a", encoding="utf-8") as f:
+            f.write(log_content)
+
+    except Exception as e:
+        print(f"로그 저장 실패 (무시함): {e}")
+
 # __all__ 갱신: 전역 vectorstore는 제거 (충돌 방지)
 __all__ = ["CommandPatternLogger", "embeddings"]
-
