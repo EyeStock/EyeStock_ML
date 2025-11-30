@@ -56,3 +56,4 @@ vectorstore_data/
 vectorstore_user_logs/
 
 /models/
+coin_predict_logs

@@ -9,6 +9,7 @@ from fastapi.concurrency import run_in_threadpool
 
 from app.ml.coin_predict_loader import get_model
 from app.models.predict import PredictRequest
+from app.utils.user_command_logger import coin_predict_log
 
 WINDOW_SIZE = 120
 RSI_PERIOD = 14
@@ -133,6 +134,8 @@ async def predict_coin(req: PredictRequest, x_user_id: str):
             prob = torch.sigmoid(logit).cpu().item()
 
         buy_signal = "1" if prob >= THRESHOLD else "0"
+
+        coin_predict_log(x_user_id, req.coinTicker, buy_signal)
 
         return {
             "prediction": buy_signal
